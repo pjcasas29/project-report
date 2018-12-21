@@ -1,0 +1,83 @@
+* GS/CSE 6432. Project
+** IoT suggested projects
+   (you can use or not the Docker tutorials)
+
+   Your group has to develop and deploy an to end IoT application that
+   follows the MAPE-K loop. You can use any cloud you want. The ultimate
+   goal of the project is to answer a research question.
+
+** Milestones
+   There are several milestones that will help you achieve the final goal:
+
+   1. Choose the application domain, its sensors and actuators. The easiest
+      thing is to use your SmartPhone as a sensor (GPS, accelerometer,
+      Camera, voice, etc..). The actuator can be an email, and SMS message
+      that alerts about an event. Design the MAPE loop for one aspect of
+      your application. Examples:
+
+      1) Detect a falling motion
+      2) Identify a specific item in the environment (by video streaming)
+      3) Identify modes: running, biking, driving..etc..
+      4) Etc...
+
+   2. Implement a monitoring service for your application and environment.
+      1) Use the existing APIs of the OS, sensors, push the data to the cloud
+         (most clouds have frameworks for that, but you can just push it to a
+         webserver through a REST API)
+      2) Emulate an workload that will trigger your even
+
+   3. Implement the Execution service for your AM; most probably, use existing
+      APIs, exposed as REST.
+
+   4. Design and implement a model (MAPE-K) for your application and environment
+      (you can choose ML or something else)
+      1) Validate the model using some data
+
+   5. Design an analysis and planning algorithm that works with the monitoring
+      and execution services designed above and uses the model you designed
+      at 4.
+      1) Show how MAPE loop works to different workloads.
+      2) In general, you might consider 2 algorithms/models and compare the
+         results (ML versus rule based versus etc..)
+
+   6. Write a 6-8 pages report summarizing the points above. Explain the
+      limitations of your design and explain what further work is needed.
+
+   7. Upload the files on Moodle before the deadline. You will present the
+      project in class at one point.
+
+* Marking
+
+The project will be marked based on the technical depth, coverage of the major
+issues in the design and modeling, correctness (files provided should not have
+syntax/semantic errors), overall presentation and on an working demo.
+
+** Hints
+   - Start early with the project
+   - Check regularly the progress with your instructor
+   - Check out the course resource page for many useful references
+   - You are strongly encouraged to work together and discuss your findings. You
+     will learn more in such discussions than working on your own
+   - You cannot copy any materials from web or anywhere else. Use your own words
+     to describe your findings
+   - Did I say it already? Start early!!!
+
+** Template for reports
+   The reports should contain the following sections:
+   1. Title
+   2. Authors
+   3. Abstract
+      - summarize in one or two paragraphs what the paper is about
+   4. Introduction (about 1page)
+      - describe the problem you are trying to solve, why is this a problem,
+        highlight the solution and the remainder of the paper. What is(are)
+        research challenge(s)?
+   5. Models, Architecture, algorithms (2 pages)
+      - here you describe the content of the project. In essence you summarize
+        the architecture, the components, the technology used, and the results.
+   6. Discussion and Conclusions (1 page)
+      - analyze your findings and experience
+   7. Team member contributions(in one paragraph, describe what each member has
+      done)
+   8. References
+      - list all the papers and sources you used, including your files

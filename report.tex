@@ -1,0 +1,91 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+\graphicspath{{../assets/}}
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[breaklinks=true,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+\setcounter{page}{1}
+\begin{document}
+%%%%%%%%% TITLE
+\title{EECS6432: Containerized Orchestration of IoT Lighting Systems}
+
+\author{
+  Daniel Parreira\\
+  York University\\
+  Toronto ON, Canada\\
+  \and
+  Pedro Casas\\
+  York University\\
+  Toronto ON, Canada\\
+  \and
+  Shane Segal\\
+  York University\\
+  Toronto ON, Canada\\
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+  We have implemented a dockerized, automatically load-balancing IoT system and
+  associated web-infrastructure for a networked smart-lighting system. Our
+  system can be applied to public spaces with shared resources, potentially
+  containing individual actors with competing goals - all while working to
+  balance a global setpoint that best satisfies the goals of all independent
+  actors in the system.
+
+  Created with horizontal scalability in mind, our software architecture is
+  well-suited towards rapid expansion of both users and resources. Our embedded
+  IoT devices are connected to our GraphQL API through a Kafka pub-sub system,
+  ensuring easy scalability. Our various interaction methods (voice, web app,
+  EEG Reader) connect through our Pub-Sub architecture where appropriate, which
+  connects them to our orchestrated containerized server architecture. Our PID
+  based load-balancer ensures that there are enough server resources available
+  and that the requests coming from each available endpoint are satisfied as
+  much as possible in the face of possibly competing goals.
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Public spaces with adaptive smart technologies present interesting problems
+regarding the satisfiability of concurrent requests for shared resources. We
+explore this problem in the context of a smart lighting system in a space such
+as a university library or public co-working space. Prior to the introduction of
+smart technologies, users might be limited to working in a globally lit
+environment, or a locally lit environment that did not effectively consider the
+preferences of those around them, or of the energy usage policy of the building
+or organization.
+
+Our system enables authenticated and authorized users to make luminance-level
+requests about the local lighting level. Our system balances this request with
+the requests of spatially co-located individuals who have made prior requests.
+These requests can either be trivially compatible with each other (e.g
+co-located users making similar requests) or be incompatible (brightness
+preferences outside of 10-15\%).
+
+As IoT technology has only recently emerged as a powerful force in the
+technology space, there are many situations that are in a suboptimal state. We
+attempt to address one such situation through the application architecture
+presented here.
+
+\end{document}
