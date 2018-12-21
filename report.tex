@@ -115,14 +115,47 @@ order to potentially build a model of their behaviour in a future iteration of
 this project.
 
 Due to the complex nature of our user interaction methods, we model our commands
-as an association between devices, the issuing user, the issuing device type,
-and the action that the command will instigate in the lighting system.
+as a three-way relation between devices, the issuing user, the issuing device
+type, and the action that the command will instigate in the lighting system.
+This is fed as input into our PID Controller. The issuing device can be one of:
+a web interface, an EEG brain wave reader, or a voice command. Voice commands
+are parsed and translated using Google's Cloud Natural Language API, and the EEG
+Commands are analyzed and parsed using data mining algorithms based on
+\emph{INSERT EEG INFO HERE}.
 
 \subsection{Architecture}
 Our server architecture is composed of a set of containers that each run an
 instance of our server software, including GraphQL endpoints and our Kafka
-pub-sub architecture.
+pub-sub infrastructure. Our infrastructure is composed of a MYSQL-backed GraphQL
+API, a MYSQL database for our EEG infrastructure, an internal API for our EEG
+brainwave reader, and an Apache Kafka Server to create and manage our physical
+devices. The distributed nature of our application is managed by Apache
+Zookeeper, which allows us to maintain a performant and highly distributed
+application architecture.
 
+Our Philips Hue Bulbs are connected to Rspberry Pis, which are subscribed
+through Kafka to our central command dispatch servers. These servers accept
+incoming commands from the GraphQL API endpoint, process and balance the
+requests from the various users through our custom PID-based load-balancer, and
+then redistribute the balanced commands back out to the corresponding devices.
 
+In order to read in voice commands, we enable integration with the Google
+Natural Language API, which parses the sound input and returns one of the
+specified commands in plaintext. We then issue this command to our load
+balancing server.
+
+Commands are issued from our load balancing server to the devices they were
+targeted towards in order of priority as determined by the load balancer. This
+avoids the problem of commands being issued at the same time, as we simply allow
+our load-balancer to determine the order based on order of arrival, and take
+that as our source of truth instead of possibly disparate device-specific timing
+logs.
+
+Our application is scalable horizontally by simply scaling the number of
+containers runnning through the Docker API's. We have simple performance
+guarantees provided by the domain in which our platform exists. Namely, we know
+that when we can handle the maximum physical capacity of the location, our
+scaling needs have been met for that location. As such, costs associated with
+autoscaling are capped at a known value.
 
 \end{document}
