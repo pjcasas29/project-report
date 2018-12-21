@@ -86,6 +86,43 @@ preferences outside of 10-15\%).
 As IoT technology has only recently emerged as a powerful force in the
 technology space, there are many situations that are in a suboptimal state. We
 attempt to address one such situation through the application architecture
-presented here.
+presented here. Our solution works to combine the global needs of a building
+such as the overally energy usage or brightness level, as well as local needs of
+a user such as the local brightness level being optimal for the situation at
+hand. Local optimality for the system at hand can include such things as
+brightness for the time of day, color of the light produced. or appropriate
+brightness for the task. In addition, we also focus on accessible and innovative
+models of user interaction with the goal of reducing the barrier for use of our
+system by people of differing physical abilities.
+
+The research challenges we faced include several disparate factors. The load
+balancing of our servers through adaptive software is an open problem in
+software engineering and one that we apply very modern techniques in software
+engineering in order to deal with it. We then have the challenge of balancing
+user-local preferences with potentially contradictory preferences of other
+co-located users as well as with global preferences that can be set on a
+location-wide basis. And finally, we have combined new and experimental human
+computer interaction techniques into an integrated technological solution.
+
+\section{Models, Architecture, and Algorithms}
+\subsection{Models}
+When considering the models in our software system, it is useful to seperate
+them into the server software and IoT software. The main model in our IoT
+software is that of the User. We require our users to be authenticated with a
+verified email and password, in order to create a persistent account for them
+that can save preferences and locations, as well as a history of commands in
+order to potentially build a model of their behaviour in a future iteration of
+this project.
+
+Due to the complex nature of our user interaction methods, we model our commands
+as an association between devices, the issuing user, the issuing device type,
+and the action that the command will instigate in the lighting system.
+
+\subsection{Architecture}
+Our server architecture is composed of a set of containers that each run an
+instance of our server software, including GraphQL endpoints and our Kafka
+pub-sub architecture.
+
+
 
 \end{document}
