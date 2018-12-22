@@ -43,7 +43,7 @@
 }
 
 \maketitle
-%\thispagestyle{empty}
+% \thispagestyle{empty}
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
@@ -128,16 +128,16 @@ Our server architecture is composed of a set of containers that each run an
 instance of our server software, including GraphQL endpoints and our Kafka
 pub-sub infrastructure. Our infrastructure is composed of a MYSQL-backed GraphQL
 API, a MYSQL database for our EEG infrastructure, an internal API for our EEG
-brainwave reader, and an Apache Kafka Server to create and manage our physical
-devices. The distributed nature of our application is managed by Apache
+brainwave reader, and an Apache Kafka Server to create and manage input from our
+EEG devices. The distributed nature of our application is managed by Apache
 Zookeeper, which allows us to maintain a performant and highly distributed
 application architecture.
 
-Our Philips Hue Bulbs are connected to Rspberry Pis, which are subscribed
-through Kafka to our central command dispatch servers. These servers accept
-incoming commands from the GraphQL API endpoint, process and balance the
-requests from the various users through our custom PID-based load-balancer, and
-then redistribute the balanced commands back out to the corresponding devices.
+Our Philips Hue Bulbs are connected to Raspberry Pi's, which dispatch commands to
+our GraphQL servers. These servers accept incoming commands from processes and
+balance the requests from the various users through our custom PID-based
+load-balancer, and then redistribute the balanced commands back out to the
+corresponding devices.
 
 In order to read in voice commands, we enable integration with the Google
 Natural Language API, which parses the sound input and returns one of the
@@ -151,11 +151,29 @@ our load-balancer to determine the order based on order of arrival, and take
 that as our source of truth instead of possibly disparate device-specific timing
 logs.
 
+Kafka is used to handle the incoming data from the EEG device. When EEG data is
+received from a user, it is sent from the receiving GraphQL endpoint to the
+first Kafka partition and saved in a database to be processed by a Kafka
+Consumer thread, which classifies theand pushes it back to a different
+Kafka queue specified by the Users authenticated identity. After all EEG input
+data is received and parsed, the GraphQL API returns the most recent EEG
+classification belonging to that user.
+
+The load-balancing in our application is two-tiered. The first tier is the
+load-balancing of user requests, and the second tier is the load balancing of
+the various servers running in our application. This allows us to balance the
+requests of multiple users easily and efficiently, as well as providing an easy
+method for implementing global constraints, in the form of a target setpoint.
+For more detail, refer to Algorithms \ref{subsection:alg}.
+
 Our application is scalable horizontally by simply scaling the number of
-containers runnning through the Docker API's. We have simple performance
+containers runnning through the Docker Swarm API. We have simple performance
 guarantees provided by the domain in which our platform exists. Namely, we know
 that when we can handle the maximum physical capacity of the location, our
 scaling needs have been met for that location. As such, costs associated with
 autoscaling are capped at a known value.
+
+\subsection{Algorithm}
+\label{subsection:alg}
 
 \end{document}
