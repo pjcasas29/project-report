@@ -121,7 +121,7 @@ This is fed as input into our PID Controller. The issuing device can be one of:
 a web interface, an EEG brain wave reader, or a voice command. Voice commands
 are parsed and translated using Google's Cloud Natural Language API, and the EEG
 Commands are analyzed and parsed using data mining algorithms based on
-\emph{INSERT EEG INFO HERE}.
+the Weka API. Weka is a commonly used free data mining library for commerical and research purposes. 
 
 \subsection{Architecture}
 Our server architecture is composed of a set of containers that each run an
@@ -154,7 +154,7 @@ logs.
 Kafka is used to handle the incoming data from the EEG device. When EEG data is
 received from a user, it is sent from the receiving GraphQL endpoint to the
 first Kafka partition and saved in a database to be processed by a Kafka
-Consumer thread, which classifies theand pushes it back to a different
+Consumer thread, which classifies them and pushes it back to a different
 Kafka queue specified by the Users authenticated identity. After all EEG input
 data is received and parsed, the GraphQL API returns the most recent EEG
 classification belonging to that user.
@@ -174,6 +174,16 @@ scaling needs have been met for that location. As such, costs associated with
 autoscaling are capped at a known value.
 
 \subsection{Algorithm}
+
+The three different portions of our system that use an adaptive methodology are our PID for the load balancer of different servers,
+the PID for the mitigation of different disparaging luminance requests and the data mining techniques used to classify our EEG data. 
+
+First, the PID for the load balancer works as follows: 
+
+The PID for luminance requests was slightly more difficult to implement since depending on the use case the setpoint may be changed. For example, if this system is to be used in a public space where the luminance should be kept high like a library, the setpoint should be kept at a high level. For this reason, we opted to creat a web interface where the setpoint could be set by the user.
+
+EEG
+
 \label{subsection:alg}
 
 \end{document}
